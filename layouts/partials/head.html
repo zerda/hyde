@@ -10,8 +10,10 @@
 
   {{ if .IsHome -}}
   <title>{{ .Site.Title }}</title>
+  {{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
   {{- else -}}
   <title>{{ .Title }} &middot; {{ .Site.Title }}</title>
+  {{ if .Description}}<meta name="description" content="{{ .Description }}">{{ end }}
   {{- end }}
 
   <!-- CSS -->
