@@ -15,10 +15,13 @@
   {{- end }}
 
   <!-- CSS -->
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/poole.css">
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/hyde.css">
+  {{ $print := resources.Get "css/print.css" | minify | fingerprint }}
+  <link type="text/css" rel="stylesheet" href="{{ $print.Permalink }}" media="print">
+  {{ $poole := resources.Get "css/poole.css" }}
+  {{ $syntax := resources.Get "css/syntax.css" }}
+  {{ $hyde := resources.Get "css/hyde.css" }}
+  {{ $bundle := slice $poole $syntax $hyde | resources.Concat "css/bundle.css" | minify | fingerprint }}
+  <link type="text/css" rel="stylesheet" href="{{ $bundle.Permalink }}">
   {{ partial "head_fonts.html" . }}
 
   <!-- Icons -->
